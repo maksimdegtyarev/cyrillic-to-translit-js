@@ -1,9 +1,9 @@
 ﻿'use strict';
 
 module.exports = function cyrillicToTranslit(config) {
-  const _preset = config ? config.preset : "ru";
+  var _preset = config ? config.preset : "ru";
 
-  const _firstLetterAssociations = {
+  var _firstLetterAssociations = {
     "а": "a",
     "б": "b",
     "в": "v",
@@ -40,7 +40,7 @@ module.exports = function cyrillicToTranslit(config) {
     "ь": "",
     "э": "e",
     "ю": "yu",
-    "я": "ya",
+    "я": "ya"
   };
 
   if (_preset === "uk") {
@@ -53,11 +53,11 @@ module.exports = function cyrillicToTranslit(config) {
       "щ": "shch",
       "'": "",
       "’": "",
-      "ʼ": "",
+      "ʼ": ""
     });
   }
 
-  const _associations = Object.assign({}, _firstLetterAssociations);
+  var _associations = Object.assign({}, _firstLetterAssociations);
 
   if (_preset === "uk") {
     Object.assign(_associations, {
@@ -65,31 +65,27 @@ module.exports = function cyrillicToTranslit(config) {
       "ї": "i",
       "й": "i",
       "ю": "iu",
-      "я": "ia",
+      "я": "ia"
     });
   }
 
-  function transform(input, spaceReplacement) {
-    if (!input) {
+  function transform(str, spaceReplacement) {
+    if (!str) {
       return "";
     }
 
-    let newStr = "";
-    for (let i = 0; i < input.length; i++) {
-      const isUpperCaseOrWhatever = input[i] === input[i].toUpperCase();
-      let strLowerCase = input[i].toLowerCase();
+    var newStr = "";
+    for (var i = 0; i < str.length; i++) {
+      var strLowerCase = str[i].toLowerCase();
       if (strLowerCase === " " && spaceReplacement) {
         newStr += spaceReplacement;
         continue;
       }
-      let newLetter = _preset === "uk" && strLowerCase === "г" && i > 0 && input[i - 1].toLowerCase() === "з"
-        ? "gh"
-        : (i === 0 ? _firstLetterAssociations : _associations)[strLowerCase];
+      var newLetter = _preset === "uk" && strLowerCase === "г" && i > 0 && str[i - 1].toLowerCase() === "з" ? "gh" : (i === 0 ? _firstLetterAssociations : _associations)[strLowerCase];
       if ("undefined" === typeof newLetter) {
-        newStr += isUpperCaseOrWhatever ? strLowerCase.toUpperCase() : strLowerCase;
-      }
-      else {
-        newStr += isUpperCaseOrWhatever ? newLetter.toUpperCase() : newLetter;
+        newStr += strLowerCase;
+      } else {
+        newStr += newLetter;
       }
     }
     return newStr;
