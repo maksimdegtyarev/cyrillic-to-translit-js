@@ -28,9 +28,7 @@ Simple javascript function for converting Cyrillic symbols to Translit
 
 [Demo page](https://greybax.github.io/cyrillic-to-translit-js)
 
-## Install
-
-`npm install --save cyrillic-to-translit-js`
+It's just ES5 version of original repository.
 
 ## Simple to use
 
